@@ -20,8 +20,9 @@ function actualizarPresupuesto(valor) {
     }
     else 
     {
+        console.log("El valor del presupuesto debe ser un número positivo");
         valor = -1;
-       return valor;
+        return valor;
     }
 }
 
