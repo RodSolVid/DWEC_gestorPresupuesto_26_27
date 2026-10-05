@@ -13,46 +13,41 @@ function mostrarPresupuesto() {
 }
 
 function actualizarPresupuesto(valor) {
-    if (typeof valor === "number" || valor >= 0)
+    if (typeof valor === "number" && valor >= 0)
     {
         presupuesto = valor;
-        return presupuesto;
+        return valor;
     }
     else 
     {
         console.log("El valor del presupuesto debe ser un número positivo");
-        valor = -1;
-        return valor;
+        return valor = -1;
     }
 }
 
 
 
 function CrearGasto(descripcion, valor) {
-    this.Descripcion = descripcion;
     
-    if (valor > 0)
-    {
-        this.Valor = valor;
-    }
-    else{
+    valor = parseFloat(valor);
+    if (isNaN(valor) || valor < 0) {
         valor = 0;
-        console.log("El valor del gasto debe ser un número positivo");
-    }
+    } 
 
-    mostrarGasto = function() {
-        console.log(`Gasto correspondiente a: ${this.Descripcion} con Valor: ${this.Valor}`);
+    this.descripcion = descripcion;
+    this.valor = valor;
+
+    this.mostrarGasto = function() {
+        let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        return mensaje;
     }
-    actualizarDescripcion = function(nuevaDescripcion) {
-        this.Descripcion = nuevaDescripcion;
+    this.actualizarDescripcion = function(nuevaDescripcion) {
+        this.descripcion = nuevaDescripcion;
     }
-    actualizarValor = function(nuevoValor) {
-        if (nuevoValor > 0)
-        {
-            this.Valor = nuevoValor;
-        }
-        else{
-            console.log("El valor del gasto debe ser un número positivo");
+    this.actualizarValor = function(nuevoValor) {
+        nuevoValor = parseFloat(nuevoValor);
+        if (!isNaN(nuevoValor) && nuevoValor >= 0) {
+            this.valor = nuevoValor;
         }
     }
 }
