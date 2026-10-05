@@ -29,8 +29,30 @@ function actualizarPresupuesto(valor) {
 
 
 
-function CrearGasto(descripcion, valor, fecha, etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     
+    
+    if (etiquetas === undefined || etiquetas === null || etiquetas === "") {
+        this.etiquetas = [];
+    }
+    else{
+        this.etiquetas = Array.from(etiquetas);
+    }
+
+    
+    if (fecha === undefined || fecha === null || fecha === "") {
+        this.fecha = Date.now();
+    }
+    else{
+        let Fecha = Date.parse(fecha);
+        if (isNaN(Fecha)) {
+            fecha = Date.now();
+        }
+        else{
+            this.fecha = Fecha;
+        }
+    }
+
     valor = parseFloat(valor);
     if (isNaN(valor) || valor < 0) {
         valor = 0;
@@ -38,6 +60,7 @@ function CrearGasto(descripcion, valor, fecha, etiquetas) {
 
     this.descripcion = descripcion;
     this.valor = valor;
+   
 
     this.mostrarGasto = function() {
         let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
