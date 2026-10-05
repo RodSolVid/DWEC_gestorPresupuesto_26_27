@@ -5,8 +5,7 @@
 // TODO: Variable global
 
 let gastos = [];
-let tGastos = 0;
-
+let idGastos = 0;
 let presupuesto = 0;
 
 
@@ -30,7 +29,7 @@ function actualizarPresupuesto(valor) {
 
 
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, etiquetas) {
     
     valor = parseFloat(valor);
     if (isNaN(valor) || valor < 0) {
@@ -55,7 +54,14 @@ function CrearGasto(descripcion, valor) {
     }
 }
 
-function listarGastos() {}
+function listarGastos() {
+    if (gastos.length === 0) {
+        return [];
+    }
+    else{
+        return gastos;
+    }
+}
 function anyadirGasto() {}
 function borrarGasto() {}
 function calcularTotalGastos() {}
