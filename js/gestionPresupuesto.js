@@ -53,6 +53,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+
     valor = parseFloat(valor);
     if (isNaN(valor) || valor < 0) {
         valor = 0;
@@ -61,6 +62,24 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     this.descripcion = descripcion;
     this.valor = valor;
    
+    this.mostrarGastoCompleto = function() {
+        let Fecha = new Date(this.fecha);
+        let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${Fecha.toLocaleString()}\nEtiquetas:\n- ${this.etiquetas.join("\n- ")}\n`;
+        return mensaje;
+    }
+    
+/*this.mostrarGastoCompleto = function() {
+    let Fecha = new Date(this.fecha);
+    
+    // Formatea fecha y hora exactamente con coma y espacio
+    let fechaTexto = `${Fecha.toLocaleDateString('es-ES')}, ${Fecha.toLocaleTimeString('es-ES')}`;
+    
+    // Une las etiquetas sin espacios extra antes del guion
+    let listaEtiquetas = this.etiquetas.map(e => `- ${e}`).join("\n");
+
+    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${listaEtiquetas}`;
+}*/
+
 
     this.mostrarGasto = function() {
         let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -85,6 +104,7 @@ function listarGastos() {
         return gastos;
     }
 }
+
 function anyadirGasto() {}
 function borrarGasto() {}
 function calcularTotalGastos() {}
