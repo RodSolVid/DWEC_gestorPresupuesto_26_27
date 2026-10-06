@@ -93,6 +93,13 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         }
     }
 
+    this.borrarEtiquetas = function(...etiquetasABorrar) {
+        for (let eti of etiquetasABorrar){
+            if (this.etiquetas.includes(eti)) {
+                this.etiquetas.splice(this.etiquetas.indexOf(eti), 1);
+            }
+        }
+    }
     this.mostrarGasto = function() {
         let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         return mensaje;
@@ -108,6 +115,7 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     }
 }
 
+
 function listarGastos() {
     if (gastos.length === 0) {
         return [];
@@ -117,10 +125,30 @@ function listarGastos() {
     }
 }
 
-function anyadirGasto() {}
-function borrarGasto() {}
-function calcularTotalGastos() {}
-function calcularBalance() {}
+function anyadirGasto(nuevoGasto) {
+    nuevoGasto.id = idGastos;
+    idGastos++;
+    gastos.push(nuevoGasto);
+}
+function borrarGasto(gastoABorrar) {
+    for (let gasto of gastos) {
+        if (gasto.id === gastoABorrar) {
+            gastos.splice(gastos.indexOf(gasto), 1);
+            break;
+        }
+    }
+}
+function calcularTotalGastos() {
+    let totalGastos = 0;
+    for (let gasto of gastos){
+        totalGastos += gasto.valor;
+    }
+    return totalGastos;
+}
+function calcularBalance() {
+    let balance = presupuesto - calcularTotalGastos();
+    return balance;
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
