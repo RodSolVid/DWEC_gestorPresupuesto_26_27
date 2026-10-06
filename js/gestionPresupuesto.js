@@ -68,18 +68,30 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
         return mensaje;
     }
     
-/*this.mostrarGastoCompleto = function() {
-    let Fecha = new Date(this.fecha);
-    
-    // Formatea fecha y hora exactamente con coma y espacio
-    let fechaTexto = `${Fecha.toLocaleDateString('es-ES')}, ${Fecha.toLocaleTimeString('es-ES')}`;
-    
-    // Une las etiquetas sin espacios extra antes del guion
-    let listaEtiquetas = this.etiquetas.map(e => `- ${e}`).join("\n");
+    this.actualizarFecha = function(nuevaFecha){
+        nuevaFecha = Date.parse(nuevaFecha);
+        if (nuevaFecha === undefined || nuevaFecha === null || nuevaFecha === "" || isNaN(nuevaFecha)) {
+            this.fecha = this.fecha;
+        }
+        else{
+            this.fecha = nuevaFecha;
+        }
+    }
 
-    return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\nFecha: ${fechaTexto}\nEtiquetas:\n${listaEtiquetas}`;
-}*/
-
+    /*this.anyadirEtiquetas = function(...nuevasEtiquetas) {
+        for (let i = 0; i < nuevasEtiquetas.length; i++) {
+            if (!this.etiquetas.includes(nuevasEtiquetas[i])) {
+                this.etiquetas.push(nuevasEtiquetas[i]);
+            }
+        }
+    }*/
+   this.anyadirEtiquetas = function(...nuevasEtiquetas) {
+        for (let eti of nuevasEtiquetas) {
+            if (!this.etiquetas.includes(eti)) {
+                this.etiquetas.push(eti);
+            }
+        }
+    }
 
     this.mostrarGasto = function() {
         let mensaje = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
