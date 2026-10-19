@@ -165,11 +165,14 @@ function calcularBalance() {
 }
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}) {
     let gastosFiltrados = gastos;
+
     if (typeof fechaDesde === "string" && !isNaN(Date.parse(fechaDesde))) {
-        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha >= fechaDesde);
+       
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha >= Date.parse(fechaDesde));
     }
     if (typeof fechaHasta === "string" && !isNaN(Date.parse(fechaHasta))) {
-        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha <= fechaHasta);
+       
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha <= Date.parse(fechaHasta));
     }
     if (valorMinimo !== undefined) {
         gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor >= valorMinimo);
@@ -178,14 +181,26 @@ function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descri
         gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor <= valorMaximo);
     }
     if (descripcionContiene) {
-        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.descripcion.includes(descripcionContiene));
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.descripcion.toLowerCase().includes(descripcionContiene.toLowerCase()));
     }
-    if (etiquetasTiene) {
-        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.etiquetas.some(etiqueta => etiqueta === etiquetasTiene));
+    if (etiquetasTiene){
+    gastosFiltrados = gastosFiltrados.filter(gasto => 
+        gasto.etiquetas.some(etiquetaGasto => etiquetasTiene.some(etiquetaFiltro =>etiquetaGasto.toLowerCase() === etiquetaFiltro.toLowerCase())));
     }
+    
     return gastosFiltrados;
 }
-function agruparGastos() {}
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta) {
+   
+    let gastosFiltrados = filtrarGastos({fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene: etiquetas});
+    let agrupacion = gastosFiltrados.reduce((acc, gasto) => {
+        let periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+        acc[periodoAgrupacion] = (acc[periodoAgrupacion] || 0) + gasto.valor;
+        return acc;
+    }, {});
+    return agrupacion;
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
