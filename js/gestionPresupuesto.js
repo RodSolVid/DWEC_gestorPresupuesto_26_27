@@ -113,7 +113,21 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             this.valor = nuevoValor;
         }
     }
+    this.obtenerPeriodoAgrupacion = function(periodo){
+        let fecha = new Date(this.fecha).toISOString();
+        
+        if(periodo == "dia"){
+            return fecha.slice(0, 10);
+        }
+        if (periodo == "mes"){
+            return fecha.slice(0, 7);
+        }
+        if (periodo == "anyo"){
+            return fecha.slice(0, 4);
+        }
+    }
 }
+
 
 
 function listarGastos() {
@@ -149,6 +163,29 @@ function calcularBalance() {
     let balance = presupuesto - calcularTotalGastos();
     return balance;
 }
+function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}) {
+    let gastosFiltrados = gastos;
+    if (typeof fechaDesde === "string" && !isNaN(Date.parse(fechaDesde))) {
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha >= fechaDesde);
+    }
+    if (typeof fechaHasta === "string" && !isNaN(Date.parse(fechaHasta))) {
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha <= fechaHasta);
+    }
+    if (valorMinimo !== undefined) {
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor >= valorMinimo);
+    }
+    if (valorMaximo !== undefined) {
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.valor <= valorMaximo);
+    }
+    if (descripcionContiene) {
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.descripcion.includes(descripcionContiene));
+    }
+    if (etiquetasTiene) {
+        gastosFiltrados = gastosFiltrados.filter(gasto => gasto.etiquetas.some(etiqueta => etiqueta === etiquetasTiene));
+    }
+    return gastosFiltrados;
+}
+function agruparGastos() {}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -160,5 +197,7 @@ export   {
     borrarGasto, 
     calcularTotalGastos, 
     calcularBalance,
+    filtrarGastos,
+    agruparGastos,
     CrearGasto
 }
