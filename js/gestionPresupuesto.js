@@ -165,7 +165,7 @@ function calcularBalance() {
 }
 function filtrarGastos({fechaDesde, fechaHasta, valorMinimo, valorMaximo, descripcionContiene, etiquetasTiene}) {
     let gastosFiltrados = gastos;
-    if (typeof fechaDesde === "string" && !isNaN(Date.parse(fechaDesde))) {
+    if (fechaDesde === "string" && !isNaN(Date.parse(fechaDesde))) {
         gastosFiltrados = gastosFiltrados.filter(gasto => gasto.fecha >= fechaDesde);
     }
     if (typeof fechaHasta === "string" && !isNaN(Date.parse(fechaHasta))) {
