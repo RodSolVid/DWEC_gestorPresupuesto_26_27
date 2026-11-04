@@ -39,3 +39,11 @@ for(let gasto of gP.filtrarGastos({fechaDesde: "2021-09-01", fechaHasta: "2021-0
 for(let gasto of gP.filtrarGastos({valorMinimo: 50})){
     gPWEB.mostrarGastoWeb("listado-gastos-filtrado-2", gasto)
 }
+
+for(let gasto of gP.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"]})){
+    gPWEB.mostrarGastoWeb("listado-gastos-filtrado-3", gasto)
+}
+
+for(let gasto of gP.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"]})){
+    gPWEB.mostrarGastoWeb("listado-gastos-filtrado-4", gasto)
+}

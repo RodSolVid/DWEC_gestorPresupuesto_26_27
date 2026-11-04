@@ -1,3 +1,5 @@
+import { agruparGastos } from "./gestionPresupuesto";
+
 function mostrarDatoEnId(idElemento, valor){
     const Elemento = document.getElementById(idElemento);
     Elemento.textContent = String(valor);
@@ -38,7 +40,11 @@ function mostrarGastoWeb (idElemento, gasto){
 
 };
 
-function mostrarGastosAgrupadosWeb(){};
+function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
+    const elemento = document.getElementById(idElemento);
+    agrup = agruparGastos()
+
+};
 
 
 
