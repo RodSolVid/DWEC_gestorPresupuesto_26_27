@@ -7,12 +7,12 @@ function mostrarDatoEnId(idElemento, valor){
 };
 
 function repintar (){
-    mostrarDatoEnId("presupuesto", gP.mostrarPresupuesto().toFixed(2));
+    mostrarDatoEnId("presupuesto", gP.mostrarPresupuesto());
     mostrarDatoEnId("gastos-totales", gP.calcularTotalGastos().toFixed(2));
-    mostrarDatoEnId("listado-gastos-completo", gP.calcularBalance().toFixed(2));
+    mostrarDatoEnId("balance-total", gP.calcularBalance().toFixed(2));
 
-    let divListadoGastos = document.getElementById("listado-gastos-completo");
-    divListadoGastos.innerHTML = ``;
+    document.getElementById("listado-gastos-completo").innerHTML = '';
+    
 
     for(let gasto of gP.listarGastos()){
         mostrarGastoWeb("listado-gastos-completo", gasto)
@@ -20,6 +20,15 @@ function repintar (){
     
 }
 
+
+function actualizarPresupuestoWeb(){
+        let promptPres = prompt("Introduzca el nuevo presupuesto");
+        promptPres = parseFloat(promptPres);
+        gP.actualizarPresupuesto(promptPres);
+        repintar();
+}
+let actualizarPres = document.getElementById("actualizarpresupuesto");
+actualizarPres.addEventListener("click", actualizarPresupuestoWeb);
 
 function mostrarGastoWeb (idElemento, gasto){
     const Elemento = document.getElementById(idElemento);
