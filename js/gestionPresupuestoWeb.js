@@ -1,9 +1,25 @@
-
+import * as gP
+    from "./gestionPresupuesto.js"
 
 function mostrarDatoEnId(idElemento, valor){
     const Elemento = document.getElementById(idElemento);
     Elemento.textContent = String(valor);
 };
+
+function repintar (){
+    mostrarDatoEnId("presupuesto", gP.mostrarPresupuesto().toFixed(2));
+    mostrarDatoEnId("gastos-totales", gP.calcularTotalGastos().toFixed(2));
+    mostrarDatoEnId("listado-gastos-completo", gP.calcularBalance().toFixed(2));
+
+    let divListadoGastos = document.getElementById("listado-gastos-completo");
+    divListadoGastos.innerHTML = ``;
+
+    for(let gasto of gP.listarGastos()){
+        mostrarGastoWeb("listado-gastos-completo", gasto)
+    }
+    
+}
+
 
 function mostrarGastoWeb (idElemento, gasto){
     const Elemento = document.getElementById(idElemento);
